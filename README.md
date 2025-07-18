@@ -94,7 +94,7 @@ openssl rand -base64 32
 **Example:**
 
 ```
-NEXTAUTH_SECRET="xmVpackzg9sdkEPzJsdGse3dskUY+4ni2quxvoK6Go="
+NEXTAUTH_SECRET="your-generated-secret-key-here"
 ```
 
 #### PayPal Client ID and Secret
@@ -104,8 +104,8 @@ Create a PayPal developer account and create a new app to get the client ID and 
 **Example:**
 
 ```
-PAYPAL_CLIENT_ID="AeFIdonfA_dW_ncys8G4LiECWBI9442IT_kRV15crlmMApC6zpb5Nsd7zlxj7UWJ5FRZtx"
-PAYPAL_APP_SECRET="REdG53DEeX_ShoPawzM4vQHCYy0a554G3xXmzSxFCDcSofBBTq9VRqjs6xsNVBcbjqz--HiiGoiV"
+PAYPAL_CLIENT_ID="your-paypal-client-id-here"
+PAYPAL_APP_SECRET="your-paypal-app-secret-here"
 ```
 
 #### Stripe Publishable and Secret Key
@@ -115,8 +115,8 @@ Create a Stripe account and get the publishable and secret key.
 **Example:**
 
 ```
-STRIPE_SECRET_KEY="sk_test_51QIr0IG87GyTererxmXxEeqV6wuzbmC0TpkRzabxqy3P4BpzpzDqnQaC1lZhmYg6IfNarnvpnbjjw5dsBq4afd0FXkeDriR"
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_51QIr0Ids7GyT6H7X6R5GoEA68lYDcbcC94VU0U02SMkrrrYZT2CgSMZ1h22udb5Rg1AuonXyjmAQZESLLj100W3VGVwze"
+STRIPE_SECRET_KEY="sk_test_your-stripe-secret-key-here"
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_your-stripe-publishable-key-here"
 ```
 
 #### Uploadthing Settings
@@ -126,9 +126,9 @@ Sign up for an account at https://uploadthing.com/ and get the token, secret and
 **Example:**
 
 ```
-UPLOADTHING_TOKEN='tyJhcGlLZXkiOiJza19saXZlXzQ4YTE2ZjhiMDE5YmFiOgrgOWQ4MmYxMGQxZGU2NTM3YzlkZGI3YjNiZDk3MmRhNGZmNGMwMmJlOWI2Y2Q0N2UiLCJhcHBJZCI6InRyejZ2NHczNzUiLCJyZWdpb25zIjpbInNlYTEiXX0='
-UPLOADTHIUG_SECRET='gg'
-UPLOADTHING_APPID='trz6vd475'
+UPLOADTHING_TOKEN='your-uploadthing-token-here'
+UPLOADTHING_SECRET='your-uploadthing-secret-here'
+UPLOADTHING_APPID='your-uploadthing-app-id-here'
 ```
 
 #### Resend API Key
@@ -138,7 +138,7 @@ Sign up for an account at https://resend.io/ and get the API key.
 **Example:**
 
 ```
-RESEND_API_KEY="re_ZnhUfrjR_QD2cDqdee3iYCrkfvPYFCYiXm"
+RESEND_API_KEY="re_your-resend-api-key-here"
 ```
 
 ### Run
@@ -271,17 +271,3 @@ So we can change the code to:
 
 > Changes can be seen in [app/not-found.tsx](https://github.com/bradtraversy/prostore/blob/main/app/not-found.tsx)
 
-## License
-
-MIT License
-
-Copyright (c) [2025] [Traversy Media]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall
