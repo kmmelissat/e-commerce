@@ -13,8 +13,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const ProductCarousel = ({ data }: { data: Product[] }) => {
-  // Filter out products without banners
-  const productsWithBanners = data.filter((product) => product.banner);
+  // Filter out products without banners and ensure banner is string
+  const productsWithBanners = data.filter(
+    (product): product is Product & { banner: string } =>
+      typeof product.banner === 'string' && product.banner.length > 0
+  );
 
   if (productsWithBanners.length === 0) return null;
 
@@ -33,7 +36,7 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
       ]}
     >
       <CarouselContent>
-        {productsWithBanners.map((product: Product) => (
+        {productsWithBanners.map((product) => (
           <CarouselItem key={product.id}>
             <Link href={`/product/${product.slug}`}>
               <div className='relative mx-auto'>
