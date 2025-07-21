@@ -6,7 +6,7 @@ A full featured Ecommerce website built with Next.js, TypeScript, PostgreSQL and
 
 <img src="/public/images/screen.png" alt="Next.js Ecommerce" />
 
-This project is from my **Next.js Ecommerce course**
+**Next.js Ecommerce course**
 
 - Traversy Media: [https://www.traversymedia.com/nextjs-ecommerce](https://www.traversymedia.com/nextjs-ecommerce)
 - Udemy: [https://www.udemy.com/course/nextjs-ecommerce-course](https://www.udemy.com/course/nextjs-ecommerce-course)
@@ -29,14 +29,6 @@ This project is from my **Next.js Ecommerce course**
   - [Run](#run)
 - [Prisma Studio](#prisma-studio)
 - [Seed Database](#seed-database)
-- [Demo](#demo)
-- [Bug Fixes And Course FAQ](#bug-fixes-and-course-faq)
-  - [Fix: Edge Function Middleware Limitations on Vercel](#fix-edge-function-middleware-limitations-on-vercel)
-  - [Bug: A newly logged in user can inherit the previous users cart](#bug-a-newly-logged-in-user-can-inherit-the-previous-users-cart)
-  - [Bug: Any user can see another users order](#bug-any-user-can-see-another-users-order)
-  - [Bug: Cart add and remove buttons share loading animation](#bug-cart-add-and-remove-buttons-share-loading-animation)
-  - [FAQ: Why are we using a JS click event in not-found](#faq-why-are-we-using-a-js-click-event-in-not-found)
-- [License](#license)
 <!--toc:end-->
 
 ## Features
