@@ -1,12 +1,14 @@
 # Prostore
 
-A full featured Ecommerce website built with Next.js, TypeScript, PostgreSQL and Prisma.
-
 **This project is based on an O'Reilly tutorial by the original author, with additional fixes, better styling, and improvements.**
+
+This was created for a class project.
 
 <img src="/public/images/screen.png" alt="Next.js Ecommerce" />
 
 **Next.js Ecommerce course**
+
+A full featured Ecommerce website built with Next.js, TypeScript, PostgreSQL and Prisma.
 
 - Traversy Media: [https://www.traversymedia.com/nextjs-ecommerce](https://www.traversymedia.com/nextjs-ecommerce)
 - Udemy: [https://www.udemy.com/course/nextjs-ecommerce-course](https://www.udemy.com/course/nextjs-ecommerce-course)
