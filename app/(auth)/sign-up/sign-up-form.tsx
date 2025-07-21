@@ -10,14 +10,34 @@ import { useFormStatus } from 'react-dom';
 import { signUpUser } from '@/lib/actions/user.actions';
 import { useSearchParams } from 'next/navigation';
 
+type SignUpState = {
+  success: boolean;
+  message: string;
+  formData: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
+};
+
 const SignUpForm = () => {
   const [data, action] = useActionState(signUpUser, {
     success: false,
     message: '',
-  });
+    formData: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  } as SignUpState);
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+  // Use form data from previous state if available, otherwise use default values
+  const formValues = data?.formData || signUpDefaultValues;
 
   const SignUpButton = () => {
     const { pending } = useFormStatus();
@@ -34,13 +54,13 @@ const SignUpForm = () => {
       <input type='hidden' name='callbackUrl' value={callbackUrl} />
       <div className='space-y-6'>
         <div>
-          <Label htmlFor='email'>Name</Label>
+          <Label htmlFor='name'>Name</Label>
           <Input
             id='name'
             name='name'
             type='text'
             autoComplete='name'
-            defaultValue={signUpDefaultValues.name}
+            defaultValue={formValues.name}
           />
         </div>
         <div>
@@ -50,7 +70,7 @@ const SignUpForm = () => {
             name='email'
             type='text'
             autoComplete='email'
-            defaultValue={signUpDefaultValues.email}
+            defaultValue={formValues.email}
           />
         </div>
         <div>
@@ -60,8 +80,8 @@ const SignUpForm = () => {
             name='password'
             type='password'
             required
-            autoComplete='password'
-            defaultValue={signUpDefaultValues.password}
+            autoComplete='new-password'
+            defaultValue={formValues.password}
           />
         </div>
         <div>
@@ -71,8 +91,8 @@ const SignUpForm = () => {
             name='confirmPassword'
             type='password'
             required
-            autoComplete='confirmPassword'
-            defaultValue={signUpDefaultValues.confirmPassword}
+            autoComplete='new-password'
+            defaultValue={formValues.confirmPassword}
           />
         </div>
         <div>

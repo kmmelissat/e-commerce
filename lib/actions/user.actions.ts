@@ -32,9 +32,23 @@ export async function signInWithCredentials(
 
     await signIn('credentials', user);
 
-    return { success: true, message: 'Signed in successfully' };
+    return {
+      success: true,
+      message: 'Signed in successfully',
+      formData: {
+        email: '',
+        password: '',
+      },
+    };
   } catch {
-    return { success: false, message: 'Invalid email or password' };
+    return {
+      success: false,
+      message: 'Invalid email or password',
+      formData: {
+        email: (formData.get('email') as string) || '',
+        password: (formData.get('password') as string) || '',
+      },
+    };
   }
 }
 
@@ -78,9 +92,28 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       password: plainPassword,
     });
 
-    return { success: true, message: 'User registered successfully' };
+    return {
+      success: true,
+      message: 'User registered successfully',
+      formData: {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      },
+    };
   } catch (error) {
-    return { success: false, message: formatError(error) };
+    // Return the form data so the form can preserve user input
+    return {
+      success: false,
+      message: formatError(error),
+      formData: {
+        name: (formData.get('name') as string) || '',
+        email: (formData.get('email') as string) || '',
+        password: (formData.get('password') as string) || '',
+        confirmPassword: (formData.get('confirmPassword') as string) || '',
+      },
+    };
   }
 }
 

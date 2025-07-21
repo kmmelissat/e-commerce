@@ -2,6 +2,8 @@
 
 A full featured Ecommerce website built with Next.js, TypeScript, PostgreSQL and Prisma.
 
+**This project is based on an O'Reilly tutorial by the original author, with additional fixes, better styling, and improvements.**
+
 <img src="/public/images/screen.png" alt="Next.js Ecommerce" />
 
 This project is from my **Next.js Ecommerce course**
@@ -175,99 +177,3 @@ To seed the database with sample data, run the following command:
 ```bash
 npx tsx ./db/seed
 ```
-
-## Demo
-
-I am not sure how long I will have this demo up but you can view it here:
-
-[ https://prostore-one.vercel.app/ ](https://prostore-one.vercel.app/)
-
-## Bug Fixes And Course FAQ
-
-### Fix: Edge Function Middleware Limitations on Vercel
-
-After deploying your app you may be getting a build error along the lines of:
-
-> The Edge Function "middleware size is 1.03 MB and your plan size limit is 1MB
-
-For the solution to resolve this please see Brads [Gist here](https://gist.github.com/bradtraversy/16e3c89b9b25bc79cf86f5f36e14e83d)
-
-There is also a new lesson added for this fix at the end of the course -
-**Vercel Hobby Tier Fix**
-
-### Bug: A newly logged in user can inherit the previous users cart
-
-If a logged in user adds items to their cart and logs out then a different user
-logs in on the same machine, they will inherit the first users cart.
-
-To fix this we can delete the current users **Cart** from the database in our **lib/actions/user.actions.ts** `signOutUser` action.
-
-> Changes can be seen in [lib/actions/user.actions.ts](https://github.com/bradtraversy/prostore/blob/a498d4362d1485b2bd3152124cb5c3a75f8fdd70/lib/actions/user.actions.ts#L45)
-
-### Bug: Any user can see another users order
-
-If a user knows the `Order.id` of another users order it is possible for them to
-visit **/order/<Order.id>** and see that other users order. This isn't likely to
-happen in reality but should be something we protect against by redirecting the
-user to our **/unauthorized** page if they are not the owner of the order.
-
-In **app/(root)/order/[id]/page.tsx** we can import the `redirect` function from Next:
-
-```ts
-import { notFound, redirect } from 'next/navigation';
-```
-
-Then check if the user is the owner of the order and redirect them if not:
-
-```ts
-// Redirect the user if they don't own the order
-if (order.userId !== session?.user.id && session?.user.role !== 'admin') {
-  return redirect('/unauthorized');
-}
-```
-
-> Changes can be seen in [app/(root)/order/[id]/page.tsx](<https://github.com/bradtraversy/prostore/blob/main/app/(root)/order/%5Bid%5D/page.tsx>)
-
-### Bug: Cart add and remove buttons share loading animation
-
-On our **/cart** page you may notice that when you increment or decrement the
-quantity of an item in the cart, then the loader shows for all buttons after we
-click. This is because all the buttons use the same **pending** state from our
-use of `useTransition` in our [app/(root)/cart/cart-table.tsx](<https://github.com/bradtraversy/prostore/blob/main/app/(root)/cart/cart-table.tsx>)
-
-We can solve this by breaking out the Buttons into their own `AddButton` and
-`RemoveButton` components, each using their own `useTransition` and so having
-their own **pending** state.
-
-You can if you wish move these components to their own files/modules but for
-ease of following along they can be seen in the same file.
-
-> Changes can be seen in [app/(root)/cart/cart-table.tsx](<https://github.com/bradtraversy/prostore/blob/main/app/(root)/cart/cart-table.tsx>)
-
-### FAQ: Why are we using a JS click event in not-found
-
-In our [app/not-found.tsx](https://github.com/bradtraversy/prostore/blob/main/app/not-found.tsx) we currently have:
-
-```tsx
-<Button
-  variant='outline'
-  className='mt-4 ml-2'
-  onClick={() => (window.location.href = '/')}
->
-  Back To Home
-</Button>
-```
-
-So we navigate the user back to the home page with a JavaScript click event,
-but this should really be a `<a />` (link) instead.
-
-So we can change the code to:
-
-```tsx
-<Button variant='outline' className='mt-4 ml-2' asChild>
-  <Link href='/'>Back To Home</Link>
-</Button>
-```
-
-> Changes can be seen in [app/not-found.tsx](https://github.com/bradtraversy/prostore/blob/main/app/not-found.tsx)
-

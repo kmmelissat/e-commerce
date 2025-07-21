@@ -10,14 +10,30 @@ import { useFormStatus } from 'react-dom';
 import { signInWithCredentials } from '@/lib/actions/user.actions';
 import { useSearchParams } from 'next/navigation';
 
+type SignInState = {
+  success: boolean;
+  message: string;
+  formData: {
+    email: string;
+    password: string;
+  };
+};
+
 const CredentialsSignInForm = () => {
   const [data, action] = useActionState(signInWithCredentials, {
     success: false,
     message: '',
-  });
+    formData: {
+      email: '',
+      password: '',
+    },
+  } as SignInState);
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+  // Use form data from previous state if available, otherwise use default values
+  const formValues = data?.formData || signInDefaultValues;
 
   const SignInButton = () => {
     const { pending } = useFormStatus();
@@ -41,7 +57,7 @@ const CredentialsSignInForm = () => {
             type='email'
             required
             autoComplete='email'
-            defaultValue={signInDefaultValues.email}
+            defaultValue={formValues.email}
           />
         </div>
         <div>
@@ -51,8 +67,8 @@ const CredentialsSignInForm = () => {
             name='password'
             type='password'
             required
-            autoComplete='password'
-            defaultValue={signInDefaultValues.password}
+            autoComplete='current-password'
+            defaultValue={formValues.password}
           />
         </div>
         <div>
