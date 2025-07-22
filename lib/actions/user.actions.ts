@@ -18,6 +18,7 @@ import { PAGE_SIZE } from '../constants';
 import { revalidatePath } from 'next/cache';
 import { Prisma } from '@prisma/client';
 import { getMyCart } from './cart.actions';
+import { redirect } from 'next/navigation';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -76,6 +77,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
     });
 
     const plainPassword = user.password;
+    const callbackUrl = (formData.get('callbackUrl') as string) || '/';
 
     user.password = await hash(user.password);
 
@@ -87,21 +89,15 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       },
     });
 
+    // Sign in the user after successful registration
     await signIn('credentials', {
       email: user.email,
       password: plainPassword,
+      redirect: false, // Don't redirect automatically
     });
 
-    return {
-      success: true,
-      message: 'User registered successfully',
-      formData: {
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      },
-    };
+    // Redirect to the callback URL or home page
+    redirect(callbackUrl);
   } catch (error) {
     // Return the form data so the form can preserve user input
     return {
