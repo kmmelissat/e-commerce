@@ -11,7 +11,35 @@ const ProductCard = ({ product }: { product: Product }) => {
   const isNew =
     new Date(product.createdAt).getTime() >
     Date.now() - 7 * 24 * 60 * 60 * 1000; // 7 days
-  const isOnSale = Number(product.price) > 50; // Example sale condition
+
+  // Only show the most important badge - prioritize featured, then new, then sale
+  const getPrimaryBadge = () => {
+    if (product.isFeatured) {
+      return {
+        type: 'featured',
+        label: 'FEATURED',
+        className: 'bg-[#864AF9] text-white hover:bg-[#7C3AED]',
+      };
+    }
+    if (isNew) {
+      return {
+        type: 'new',
+        label: 'NEW',
+        className: 'bg-[#F8E559] text-black hover:bg-[#F8E559]/90',
+      };
+    }
+    if (Number(product.price) > 100) {
+      // Only show sale for expensive items
+      return {
+        type: 'sale',
+        label: 'SALE',
+        className: 'bg-red-500 text-white hover:bg-red-600',
+      };
+    }
+    return null;
+  };
+
+  const primaryBadge = getPrimaryBadge();
 
   return (
     <Card className='group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 bg-white dark:bg-gray-900'>
@@ -28,24 +56,16 @@ const ProductCard = ({ product }: { product: Product }) => {
           />
         </Link>
 
-        {/* Badges */}
-        <div className='absolute top-3 left-3 flex flex-col gap-2'>
-          {isNew && (
-            <Badge className='bg-[#F8E559] text-black hover:bg-[#F8E559]/90 text-xs font-semibold'>
-              NEW
+        {/* Single Badge - Only show the most important one */}
+        {primaryBadge && (
+          <div className='absolute top-3 left-3'>
+            <Badge
+              className={`${primaryBadge.className} text-xs font-semibold`}
+            >
+              {primaryBadge.label}
             </Badge>
-          )}
-          {isOnSale && (
-            <Badge className='bg-red-500 text-white hover:bg-red-600 text-xs font-semibold'>
-              SALE
-            </Badge>
-          )}
-          {product.isFeatured && (
-            <Badge className='bg-[#864AF9] text-white hover:bg-[#7C3AED] text-xs font-semibold'>
-              FEATURED
-            </Badge>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Stock Status */}
         {product.stock === 0 && (
