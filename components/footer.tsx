@@ -9,7 +9,6 @@ import {
   Shield,
   Headphones,
   Star,
-  Globe,
   Facebook,
   Twitter,
   Instagram,
