@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { Sparkles, Clock, Gift, ShoppingCart } from 'lucide-react';
 
 // Static target date (replace with desired date)
 const TARGET_DATE = new Date('2025-12-31T23:59:59');
@@ -48,10 +49,23 @@ const DealCountdown = () => {
 
   if (!time) {
     return (
-      <section className='grid grid-cols-1 md:grid-cols-2 my-20'>
-        <div className='flex flex-col gap-2 justify-center'>
-          <h3 className='text-3xl font-bold'>Loading Countdown...</h3>
+      <section className='relative overflow-hidden bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300 dark:from-purple-900/30 dark:via-purple-800/30 dark:to-purple-700/30 py-20 px-4 rounded-3xl mx-4 my-8'>
+        <div className='container mx-auto'>
+          <div className='flex flex-col md:flex-row items-center justify-between gap-12'>
+            <div className='flex flex-col gap-6 text-center md:text-left'>
+              <div className='flex items-center gap-2 justify-center md:justify-start'>
+                <Sparkles className='h-6 w-6 text-[#F8E559]' />
+                <span className='text-[#F8E559] font-semibold text-sm uppercase tracking-wider'>
+                  Limited Time
+                </span>
+              </div>
+              <h3 className='text-4xl md:text-5xl font-bold text-gray-800 dark:text-white leading-tight'>
+                Loading Countdown...
+              </h3>
+            </div>
+          </div>
         </div>
+        <div className='absolute inset-0 bg-white/20 dark:bg-black/10 rounded-3xl'></div>
       </section>
     );
   }
@@ -63,70 +77,151 @@ const DealCountdown = () => {
     time.seconds === 0
   ) {
     return (
-      <section className='grid grid-cols-1 md:grid-cols-2 my-20'>
-        <div className='flex flex-col gap-2 justify-center'>
-          <h3 className='text-3xl font-bold'>Deal Has Ended</h3>
-          <p>
-            This deal is no longer available. Check out our latest promotions!
-          </p>
-
-          <div className='text-center'>
-            <Button asChild>
-              <Link href='/search'>View Products</Link>
-            </Button>
+      <section className='relative overflow-hidden bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 dark:from-gray-800 dark:via-gray-700 dark:to-gray-600 py-20 px-4 rounded-3xl mx-4 my-8'>
+        <div className='container mx-auto'>
+          <div className='flex flex-col md:flex-row items-center justify-between gap-12'>
+            <div className='flex flex-col gap-6 text-center md:text-left'>
+              <div className='flex items-center gap-2 justify-center md:justify-start'>
+                <Clock className='h-6 w-6 text-red-500' />
+                <span className='text-red-500 font-semibold text-sm uppercase tracking-wider'>
+                  Deal Ended
+                </span>
+              </div>
+              <h3 className='text-4xl md:text-5xl font-bold text-gray-800 dark:text-white leading-tight'>
+                Deal Has Ended
+              </h3>
+              <p className='text-gray-600 dark:text-gray-300 text-lg max-w-2xl'>
+                This deal is no longer available. Check out our latest
+                promotions and stay tuned for new amazing offers!
+              </p>
+              <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start'>
+                <Button
+                  asChild
+                  className='bg-gradient-to-r from-[#4C1D95] to-[#864AF9] hover:from-[#3B3486] hover:to-[#7C3AED] text-white shadow-lg hover:shadow-xl transition-all duration-200 px-8 py-3 text-lg rounded-2xl'
+                >
+                  <Link href='/search' className='flex items-center gap-2'>
+                    <ShoppingCart className='h-5 w-5' />
+                    View Products
+                  </Link>
+                </Button>
+              </div>
+            </div>
+            <div className='relative'>
+              <div className='w-80 h-80 bg-gray-300 dark:bg-gray-600 rounded-3xl flex items-center justify-center'>
+                <span className='text-gray-500 dark:text-gray-400 text-lg'>
+                  Deal Expired
+                </span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className='flex justify-center'>
-          <Image
-            src='/images/promo.jpg'
-            alt='promotion'
-            width={300}
-            height={200}
-          />
-        </div>
+        <div className='absolute inset-0 bg-white/30 dark:bg-black/20 rounded-3xl'></div>
       </section>
     );
   }
 
   return (
-    <section className='grid grid-cols-1 md:grid-cols-2 my-20'>
-      <div className='flex flex-col gap-2 justify-center'>
-        <h3 className='text-3xl font-bold'>Deal Of The Month</h3>
-        <p>
-          Get ready for a shopping experience like never before with our Deals
-          of the Month! Every purchase comes with exclusive perks and offers,
-          making this month a celebration of savvy choices and amazing deals.
-          Don&apos;t miss out! 🎁🛒
-        </p>
-        <ul className='grid grid-cols-4'>
-          <StatBox label='Days' value={time.days} />
-          <StatBox label='Hours' value={time.hours} />
-          <StatBox label='Minutes' value={time.minutes} />
-          <StatBox label='Seconds' value={time.seconds} />
-        </ul>
-        <div className='text-center'>
-          <Button asChild>
-            <Link href='/search'>View Products</Link>
-          </Button>
+    <section className='relative overflow-hidden bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200 dark:from-purple-900/20 dark:via-purple-800/20 dark:to-purple-700/20 py-20 px-4 rounded-3xl mx-4 my-8'>
+      {/* Background decoration */}
+      <div className='absolute inset-0 bg-white/40 dark:bg-black/10 rounded-3xl'></div>
+      <div className='absolute top-0 left-0 w-72 h-72 bg-[#F8E559]/20 rounded-full blur-3xl'></div>
+      <div className='absolute bottom-0 right-0 w-96 h-96 bg-[#864AF9]/15 rounded-full blur-3xl'></div>
+
+      <div className='container mx-auto relative z-10'>
+        <div className='flex flex-col md:flex-row items-center justify-between gap-12'>
+          <div className='flex flex-col gap-8 text-center md:text-left flex-1'>
+            <div className='flex items-center gap-3 justify-center md:justify-start'>
+              <div className='flex items-center gap-2 bg-[#F8E559]/30 backdrop-blur-sm px-6 py-3 rounded-full border border-[#F8E559]/40 shadow-lg'>
+                <Sparkles className='h-5 w-5 text-[#F8E559]' />
+                <span className='text-[#F8E559] font-semibold text-sm uppercase tracking-wider'>
+                  Limited Time Offer
+                </span>
+              </div>
+            </div>
+
+            <div className='space-y-4'>
+              <h3 className='text-4xl md:text-6xl font-bold text-gray-800 dark:text-white leading-tight'>
+                Deal Of The Month
+              </h3>
+              <p className='text-gray-600 dark:text-gray-300 text-lg md:text-xl max-w-2xl leading-relaxed'>
+                Get ready for a shopping experience like never before with our
+                Deals of the Month! Every purchase comes with exclusive perks
+                and offers, making this month a celebration of savvy choices and
+                amazing deals. Don&apos;t miss out! 🎁🛒
+              </p>
+            </div>
+
+            {/* Countdown Timer */}
+            <div className='space-y-4'>
+              <div className='flex items-center gap-2 justify-center md:justify-start'>
+                <Clock className='h-5 w-5 text-[#F8E559]' />
+                <span className='text-[#F8E559] font-semibold text-lg'>
+                  Time Remaining:
+                </span>
+              </div>
+              <div className='grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md'>
+                <StatBox label='Days' value={time.days} />
+                <StatBox label='Hours' value={time.hours} />
+                <StatBox label='Minutes' value={time.minutes} />
+                <StatBox label='Seconds' value={time.seconds} />
+              </div>
+            </div>
+
+            <div className='flex flex-col sm:flex-row gap-4 justify-center md:justify-start'>
+              <Button
+                asChild
+                className='bg-gradient-to-r from-[#F8E559] to-[#F8E559]/90 hover:from-[#F8E559]/90 hover:to-[#F8E559] text-black shadow-lg hover:shadow-xl transition-all duration-200 px-8 py-4 text-lg font-semibold rounded-2xl'
+              >
+                <Link href='/search' className='flex items-center gap-2'>
+                  <Gift className='h-5 w-5' />
+                  Shop Now
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant='outline'
+                className='border-[#F8E559] text-[#F8E559] hover:bg-[#F8E559] hover:text-black transition-all duration-200 px-8 py-4 text-lg font-semibold rounded-2xl'
+              >
+                <Link href='/deals' className='flex items-center gap-2'>
+                  <ShoppingCart className='h-5 w-5' />
+                  View All Deals
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          <div className='relative flex-1 flex justify-center md:justify-end'>
+            <div className='relative'>
+              <div className='absolute inset-0 bg-gradient-to-r from-[#F8E559]/30 to-[#864AF9]/20 rounded-3xl blur-xl'></div>
+              <div className='relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-8 border border-white/40 dark:border-gray-700/40 shadow-2xl'>
+                <Image
+                  src='/images/promo.jpg'
+                  alt='Special promotion'
+                  width={400}
+                  height={300}
+                  className='rounded-2xl shadow-lg'
+                />
+                <div className='absolute -top-4 -right-4 bg-[#F8E559] text-black px-4 py-2 rounded-full font-bold text-sm shadow-lg'>
+                  -50% OFF
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className='flex justify-center'>
-        <Image
-          src='/images/promo.jpg'
-          alt='promotion'
-          width={300}
-          height={200}
-        />
       </div>
     </section>
   );
 };
 
 const StatBox = ({ label, value }: { label: string; value: number }) => (
-  <li className='p-4 w-full text-center'>
-    <p className='text-3xl font-bold'>{value}</p>
-    <p>{label}</p>
-  </li>
+  <div className='bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-3xl p-4 border border-white/50 dark:border-gray-700/50 text-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105'>
+    <div className='text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-1'>
+      {value.toString().padStart(2, '0')}
+    </div>
+    <div className='text-[#F8E559] font-medium text-sm uppercase tracking-wider'>
+      {label}
+    </div>
+  </div>
 );
 
 export default DealCountdown;
