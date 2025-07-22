@@ -49,7 +49,7 @@ const DealCountdown = () => {
 
   if (!time) {
     return (
-      <section className='relative overflow-hidden bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300 dark:from-purple-900/30 dark:via-purple-800/30 dark:to-purple-700/30 py-20 px-4 rounded-3xl mx-4 my-8'>
+      <section className='py-20 px-4'>
         <div className='container mx-auto'>
           <div className='flex flex-col md:flex-row items-center justify-between gap-12'>
             <div className='flex flex-col gap-6 text-center md:text-left'>
@@ -65,7 +65,6 @@ const DealCountdown = () => {
             </div>
           </div>
         </div>
-        <div className='absolute inset-0 bg-white/20 dark:bg-black/10 rounded-3xl'></div>
       </section>
     );
   }
@@ -77,7 +76,7 @@ const DealCountdown = () => {
     time.seconds === 0
   ) {
     return (
-      <section className='relative overflow-hidden bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 dark:from-gray-800 dark:via-gray-700 dark:to-gray-600 py-20 px-4 rounded-3xl mx-4 my-8'>
+      <section className='py-20 px-4'>
         <div className='container mx-auto'>
           <div className='flex flex-col md:flex-row items-center justify-between gap-12'>
             <div className='flex flex-col gap-6 text-center md:text-left'>
@@ -107,7 +106,7 @@ const DealCountdown = () => {
               </div>
             </div>
             <div className='relative'>
-              <div className='w-80 h-80 bg-gray-300 dark:bg-gray-600 rounded-3xl flex items-center justify-center'>
+              <div className='w-80 h-80 bg-gray-200 dark:bg-gray-700 rounded-3xl flex items-center justify-center'>
                 <span className='text-gray-500 dark:text-gray-400 text-lg'>
                   Deal Expired
                 </span>
@@ -115,23 +114,17 @@ const DealCountdown = () => {
             </div>
           </div>
         </div>
-        <div className='absolute inset-0 bg-white/30 dark:bg-black/20 rounded-3xl'></div>
       </section>
     );
   }
 
   return (
-    <section className='relative overflow-hidden bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200 dark:from-purple-900/20 dark:via-purple-800/20 dark:to-purple-700/20 py-20 px-4 rounded-3xl mx-4 my-8'>
-      {/* Background decoration */}
-      <div className='absolute inset-0 bg-white/40 dark:bg-black/10 rounded-3xl'></div>
-      <div className='absolute top-0 left-0 w-72 h-72 bg-[#F8E559]/20 rounded-full blur-3xl'></div>
-      <div className='absolute bottom-0 right-0 w-96 h-96 bg-[#864AF9]/15 rounded-full blur-3xl'></div>
-
-      <div className='container mx-auto relative z-10'>
+    <section className='py-20 px-4'>
+      <div className='container mx-auto'>
         <div className='flex flex-col md:flex-row items-center justify-between gap-12'>
           <div className='flex flex-col gap-8 text-center md:text-left flex-1'>
             <div className='flex items-center gap-3 justify-center md:justify-start'>
-              <div className='flex items-center gap-2 bg-[#F8E559]/30 backdrop-blur-sm px-6 py-3 rounded-full border border-[#F8E559]/40 shadow-lg'>
+              <div className='flex items-center gap-2 bg-[#F8E559]/20 px-6 py-3 rounded-full border border-[#F8E559]/30 shadow-lg'>
                 <Sparkles className='h-5 w-5 text-[#F8E559]' />
                 <span className='text-[#F8E559] font-semibold text-sm uppercase tracking-wider'>
                   Limited Time Offer
@@ -179,8 +172,7 @@ const DealCountdown = () => {
               </Button>
               <Button
                 asChild
-                variant='outline'
-                className='border-[#F8E559] text-[#F8E559] hover:bg-[#F8E559] hover:text-black transition-all duration-200 px-8 py-4 text-lg font-semibold rounded-2xl'
+                className='bg-gradient-to-r from-[#4C1D95] to-[#864AF9] hover:from-[#3B3486] hover:to-[#7C3AED] text-white shadow-lg hover:shadow-xl transition-all duration-200 px-8 py-4 text-lg font-semibold rounded-2xl'
               >
                 <Link href='/deals' className='flex items-center gap-2'>
                   <ShoppingCart className='h-5 w-5' />
@@ -192,8 +184,7 @@ const DealCountdown = () => {
 
           <div className='relative flex-1 flex justify-center md:justify-end'>
             <div className='relative'>
-              <div className='absolute inset-0 bg-gradient-to-r from-[#F8E559]/30 to-[#864AF9]/20 rounded-3xl blur-xl'></div>
-              <div className='relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-8 border border-white/40 dark:border-gray-700/40 shadow-2xl'>
+              <div className='relative bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-2xl'>
                 <Image
                   src='/images/promo.jpg'
                   alt='Special promotion'
@@ -214,11 +205,11 @@ const DealCountdown = () => {
 };
 
 const StatBox = ({ label, value }: { label: string; value: number }) => (
-  <div className='bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-3xl p-4 border border-white/50 dark:border-gray-700/50 text-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105'>
+  <div className='bg-white dark:bg-gray-800 rounded-3xl p-4 border border-gray-200 dark:border-gray-700 text-center shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105'>
     <div className='text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-1'>
       {value.toString().padStart(2, '0')}
     </div>
-    <div className='text-[#F8E559] font-medium text-sm uppercase tracking-wider'>
+    <div className='text-[#864AF9] font-medium text-sm uppercase tracking-wider'>
       {label}
     </div>
   </div>
