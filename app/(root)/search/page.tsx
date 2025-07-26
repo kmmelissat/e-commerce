@@ -16,10 +16,10 @@ import {
   Tag,
   SortAsc,
   SortDesc,
-  TrendingUp,
   Clock,
   Star as StarIcon,
 } from 'lucide-react';
+import { Product } from '@/types';
 
 const prices = [
   {
@@ -405,9 +405,15 @@ const SearchPage = async (props: {
               </Card>
             ) : (
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                {products.data.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+                {products.data.map((product) => {
+                  const serializedProduct = {
+                    ...product,
+                    createdAt: product.createdAt.toISOString(),
+                  } as Product & { createdAt: string };
+                  return (
+                    <ProductCard key={product.id} product={serializedProduct} />
+                  );
+                })}
               </div>
             )}
           </div>
