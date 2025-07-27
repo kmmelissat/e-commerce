@@ -113,7 +113,7 @@ export async function getAllProducts({
   const dataCount = await prisma.product.count();
 
   return {
-    data,
+    data: convertToPlainObject(data),
     totalPages: Math.ceil(dataCount / limit),
   };
 }
@@ -190,7 +190,7 @@ export async function getAllCategories() {
     _count: true,
   });
 
-  return data;
+  return convertToPlainObject(data);
 }
 
 // Get featured products
