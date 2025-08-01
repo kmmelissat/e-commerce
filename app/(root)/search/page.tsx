@@ -408,7 +408,10 @@ const SearchPage = async (props: {
                 {products.data.map((product) => {
                   const serializedProduct = {
                     ...product,
-                    createdAt: product.createdAt.toISOString(),
+                    createdAt:
+                      typeof product.createdAt === 'string'
+                        ? product.createdAt
+                        : product.createdAt.toISOString(),
                   } as Product & { createdAt: string };
                   return (
                     <ProductCard key={product.id} product={serializedProduct} />
