@@ -1,6 +1,5 @@
 'use server';
 
-
 import { convertToPlainObject, formatError } from '../utils';
 import { auth } from '@/auth';
 import { getMyCart } from './cart.actions';
@@ -371,7 +370,7 @@ export async function getAllOrders({
     orderBy: { createdAt: 'desc' },
     take: limit,
     skip: (page - 1) * limit,
-    include: { user: { select: { name: true } } },
+    include: { user: { select: { name: true, email: true } } },
   });
 
   const dataCount = await prisma.order.count();
