@@ -31,17 +31,35 @@ export async function signInWithCredentials(
       password: formData.get('password'),
     });
 
-    await signIn('credentials', user);
+    const callbackUrl = (formData.get('callbackUrl') as string) || '/';
 
+    const result = await signIn('credentials', {
+      ...user,
+      redirect: false, // Don't redirect automatically
+    });
+
+    if (result?.error) {
+      return {
+        success: false,
+        message: 'Invalid email or password',
+        formData: {
+          email: (formData.get('email') as string) || '',
+          password: (formData.get('password') as string) || '',
+        },
+      };
+    }
+
+    // Return success and let the client handle redirect
     return {
       success: true,
-      message: 'Signed in successfully',
+      message: 'Signed in successfully! Redirecting...',
       formData: {
         email: '',
         password: '',
       },
+      redirectTo: callbackUrl,
     };
-  } catch {
+  } catch (error) {
     return {
       success: false,
       message: 'Invalid email or password',
@@ -90,14 +108,39 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
     });
 
     // Sign in the user after successful registration
-    await signIn('credentials', {
+    const result = await signIn('credentials', {
       email: user.email,
       password: plainPassword,
       redirect: false, // Don't redirect automatically
     });
 
-    // Redirect to the callback URL or home page
-    redirect(callbackUrl);
+    if (result?.error) {
+      // If sign-in fails after registration, return error
+      return {
+        success: false,
+        message:
+          'Account created but sign-in failed. Please try signing in manually.',
+        formData: {
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        },
+      };
+    }
+
+    // Return success and let the client handle redirect
+    return {
+      success: true,
+      message: 'Account created successfully! Redirecting...',
+      formData: {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      },
+      redirectTo: callbackUrl,
+    };
   } catch (error) {
     // Return the form data so the form can preserve user input
     return {

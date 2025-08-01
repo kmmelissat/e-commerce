@@ -8,7 +8,8 @@ import Link from 'next/link';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { signUpUser } from '@/lib/actions/user.actions';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 type SignUpState = {
   success: boolean;
@@ -19,6 +20,7 @@ type SignUpState = {
     password: string;
     confirmPassword: string;
   };
+  redirectTo?: string;
 };
 
 const SignUpForm = () => {
@@ -31,13 +33,26 @@ const SignUpForm = () => {
       password: '',
       confirmPassword: '',
     },
+    redirectTo: undefined,
   } as SignUpState);
 
   const searchParams = useSearchParams();
+  const router = useRouter();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   // Use form data from previous state if available, otherwise use default values
   const formValues = data?.formData || signUpDefaultValues;
+
+  // Handle redirect after successful sign-up
+  useEffect(() => {
+    if (data?.success && data?.redirectTo) {
+      const timer = setTimeout(() => {
+        router.push(data.redirectTo);
+      }, 1500); // Small delay to show success message
+
+      return () => clearTimeout(timer);
+    }
+  }, [data?.success, data?.redirectTo, router]);
 
   const SignUpButton = () => {
     const { pending } = useFormStatus();
@@ -59,6 +74,7 @@ const SignUpForm = () => {
             id='name'
             name='name'
             type='text'
+            required
             autoComplete='name'
             defaultValue={formValues.name}
           />
@@ -68,7 +84,8 @@ const SignUpForm = () => {
           <Input
             id='email'
             name='email'
-            type='text'
+            type='email'
+            required
             autoComplete='email'
             defaultValue={formValues.email}
           />
@@ -101,6 +118,12 @@ const SignUpForm = () => {
 
         {data && !data.success && (
           <div className='text-center text-destructive'>{data.message}</div>
+        )}
+
+        {data && data.success && (
+          <div className='text-center text-green-600 dark:text-green-400'>
+            {data.message}
+          </div>
         )}
 
         <div className='text-sm text-center text-muted-foreground'>

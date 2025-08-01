@@ -8,7 +8,8 @@ import Link from 'next/link';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { signInWithCredentials } from '@/lib/actions/user.actions';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 type SignInState = {
   success: boolean;
@@ -17,6 +18,7 @@ type SignInState = {
     email: string;
     password: string;
   };
+  redirectTo?: string;
 };
 
 const CredentialsSignInForm = () => {
@@ -27,13 +29,26 @@ const CredentialsSignInForm = () => {
       email: '',
       password: '',
     },
+    redirectTo: undefined,
   } as SignInState);
 
   const searchParams = useSearchParams();
+  const router = useRouter();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   // Use form data from previous state if available, otherwise use default values
   const formValues = data?.formData || signInDefaultValues;
+
+  // Handle redirect after successful sign-in
+  useEffect(() => {
+    if (data?.success && data?.redirectTo) {
+      const timer = setTimeout(() => {
+        router.push(data.redirectTo);
+      }, 1500); // Small delay to show success message
+
+      return () => clearTimeout(timer);
+    }
+  }, [data?.success, data?.redirectTo, router]);
 
   const SignInButton = () => {
     const { pending } = useFormStatus();
@@ -77,6 +92,12 @@ const CredentialsSignInForm = () => {
 
         {data && !data.success && (
           <div className='text-center text-destructive'>{data.message}</div>
+        )}
+
+        {data && data.success && (
+          <div className='text-center text-green-600 dark:text-green-400'>
+            {data.message}
+          </div>
         )}
 
         <div className='text-sm text-center text-muted-foreground'>
